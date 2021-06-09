@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="bf9aee9d-bf45-423f-9bf7-73055f9593b7" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../../NFTList.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../NFTList.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../components/RenderItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../components/RenderItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../components/RenderMedia.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../components/RenderMedia.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../components/RightFooterRenderItem.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../components/RightFooterRenderItem.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../ios/Podfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../ios/Podfile.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../../package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../screens/NFTScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../screens/NFTScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../screens/SlideshowScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/../../screens/SlideshowScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../../yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/../../yarn.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+  </component>
+  <component name="ProjectId" id="1tgBNcDqyWfIdTteTsmDHFg92IF" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bf9aee9d-bf45-423f-9bf7-73055f9593b7" name="Default Changelist" comment="" />
+      <created>1623180812338</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1623180812338</updated>
+    </task>
+    <servers />
+  </component>
+</project>
