@@ -2,7 +2,7 @@ export default {
     get name() {
         return 'ExpoVideoThumbnails';
     },
-    async getThumbnailAsync(sourceFilename, options = {}) {
+    async getThumbnailAsync(sourceUri, destFilepath, options = {}) {
         throw new Error('ExpoVideoThumbnails not supported on Expo Web');
     },
 };

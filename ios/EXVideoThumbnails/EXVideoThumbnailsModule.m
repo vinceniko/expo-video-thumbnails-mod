@@ -20,7 +20,8 @@ UM_EXPORT_MODULE(ExpoVideoThumbnails);
 }
 
 UM_EXPORT_METHOD_AS(getThumbnail,
-                    sourceFilename:(NSString *)source
+                    sourceUri:(NSString *)source
+                    destFilepath:(NSString *)dest
                     options:(NSDictionary *)options
                     resolve:(UMPromiseResolveBlock)resolve
                     reject:(UMPromiseRejectBlock)reject)
@@ -34,13 +35,11 @@ UM_EXPORT_METHOD_AS(getThumbnail,
       return reject(@"E_FILESYSTEM_PERMISSIONS", [NSString stringWithFormat:@"File '%@' isn't readable.", source], nil);
     }
   }
-   
-    NSString *directory = [_fileSystem.cachesDirectory stringByAppendingPathComponent:@"VideoThumbnails"];
-    [_fileSystem ensureDirExistsWithPath:directory];
 
-    NSString *sourceFName = [NSString stringWithString:source.lastPathComponent];
-    NSString *fileName = [[sourceFName stringByDeletingPathExtension] stringByAppendingString:@".jpg"];
-    NSString *newPath = [directory stringByAppendingPathComponent:fileName];
+    dest = [NSURL URLWithString:dest].relativePath;
+    NSString *fileName = [[dest.lastPathComponent stringByDeletingPathExtension] stringByAppendingString:@".jpg"];
+    NSString *newPath = [[dest stringByDeletingLastPathComponent] stringByAppendingPathComponent:fileName];
+    
     NSURL *fileURL = [NSURL fileURLWithPath:newPath];
     NSString *filePath = [fileURL absoluteString];
     NSError *err; // err isn't checked, throw warning
@@ -57,30 +56,36 @@ UM_EXPORT_METHOD_AS(getThumbnail,
   long timeInMs = [(NSNumber *)options[OPTIONS_KEY_TIME] integerValue] ?: 0;
   float quality = [(NSNumber *)options[OPTIONS_KEY_QUALITY] floatValue] ?: 1.0;
   NSDictionary *headers = options[OPTIONS_KEY_HEADERS] ?: @{};
-
+    
   AVURLAsset *asset = [[AVURLAsset alloc] initWithURL:url options:@{@"AVURLAssetHTTPHeaderFieldsKey": headers}];
-  AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
-  generator.appliesPreferredTrackTransform = YES;
+  [asset loadValuesAsynchronouslyForKeys:@[@"tracks"] completionHandler:^{
+        AVAssetImageGenerator *generator = [[AVAssetImageGenerator alloc] initWithAsset:asset];
+        generator.appliesPreferredTrackTransform = YES;
 
-  CMTime time = CMTimeMake(timeInMs, 1000);
+        CMTime time = CMTimeMake(timeInMs, 1000);
 
-  CGImageRef imgRef = [generator copyCGImageAtTime:time actualTime:NULL error:&err];
-    err = NULL;
-  if (err) {
-    return reject(@"E_THUM_FAIL", err.localizedFailureReason, err);
-  }
-  UIImage *thumbnail = [UIImage imageWithCGImage:imgRef];
+        NSError *err; // err isn't checked, throw warning
+        CGImageRef imgRef = [generator copyCGImageAtTime:time actualTime:NULL error:&err];
+        if (err) {
+          return reject(@"E_THUM_FAIL", err.localizedFailureReason, err);
+        }
+        UIImage *thumbnail = [UIImage imageWithCGImage:imgRef];
 
-  NSData *data = UIImageJPEGRepresentation(thumbnail, quality);
-  if (![data writeToFile:newPath atomically:YES]) {
-    return reject(@"E_WRITE_ERROR", @"Can't write to file.", nil);
-  }
-  
-  resolve(@{
-            @"uri" : filePath,
-            @"width" : @(thumbnail.size.width),
-            @"height" : @(thumbnail.size.height),
-            });
+//        err = NULL;
+        NSData *data = UIImageJPEGRepresentation(thumbnail, quality);
+        if (![data writeToFile:newPath atomically:YES]) {
+          return reject(@"E_WRITE_ERROR", @"Can't write to file.", nil);
+        }
+          
+        CGImageRelease(imgRef);  // CGImageRef won't be released by ARC
+        
+        resolve(@{
+                  @"uri" : filePath,
+                  @"width" : @(thumbnail.size.width),
+                  @"height" : @(thumbnail.size.height),
+                  });
+
+  }];
 }
 
 @end

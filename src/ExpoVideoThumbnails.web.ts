@@ -5,7 +5,8 @@ export default {
     return 'ExpoVideoThumbnails';
   },
   async getThumbnailAsync(
-    sourceFilename: string,
+    sourceUri: string,
+    destFilepath: string,
     options: VideoThumbnailsOptions = {}
   ): Promise<VideoThumbnailsResult> {
     throw new Error('ExpoVideoThumbnails not supported on Expo Web');
